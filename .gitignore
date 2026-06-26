@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Expo
+.expo/
+dist/
+web-build/
+*.orig.*
+.expo-shared/
+expo-env.d.ts
+
+# Native
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+ios/
+android/
+
+# Metro
+.metro-health-check*
+
+# Turbo
+.turbo/
+
+# Build outputs
+*.tsbuildinfo
+
+# NativeWind / Tailwind cache
+node_modules/.cache/
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# macOS / editors
+.DS_Store
+*.pem
+.idea/
+.vscode/*
+!.vscode/extensions.json

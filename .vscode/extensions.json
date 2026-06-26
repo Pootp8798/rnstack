@@ -1,0 +1,10 @@
+{
+	"recommendations": [
+		"biomejs.biome",
+		"bradlc.vscode-tailwindcss",
+		"expo.vscode-expo-tools",
+		"usernamehw.errorlens",
+		"yoavbls.pretty-ts-errors",
+		"christian-kohler.path-intellisense"
+	]
+}

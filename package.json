@@ -1,0 +1,40 @@
+{
+	"name": "rn-monorepo",
+	"version": "1.0.0",
+	"description": "A batteries-included Expo + Turborepo React Native monorepo starter (NativeWind v5, RN Reusables, TanStack Query).",
+	"scripts": {
+		"lint": "turbo run lint",
+		"lint:unsafe": "biome check . --write --unsafe",
+		"typecheck": "turbo run typecheck",
+		"format": "biome format --write .",
+		"format:check": "biome format .",
+		"clean": "turbo run clean && rm -rf node_modules",
+		"prepare": "husky"
+	},
+	"keywords": [
+		"react-native-monorepo"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sanjaysah101/rn-monorepo"
+	},
+	"author": "Sanjay Kumar Sah",
+	"license": "ISC",
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "11.9.0",
+			"onFail": "download"
+		}
+	},
+	"engines": {
+		"node": ">=22.13"
+	},
+	"packageManager": "pnpm@11.9.0",
+	"devDependencies": {
+		"@biomejs/biome": "2.5.1",
+		"husky": "9.1.7",
+		"turbo": "2.10.0",
+		"typescript": "6.0.3"
+	}
+}

@@ -1,0 +1,5 @@
+# Auto-fix + format the whole workspace, then re-stage anything Biome changed,
+# and finally gate on typecheck so broken types never get committed.
+pnpm lint:unsafe
+git add -A
+pnpm typecheck

@@ -19,8 +19,9 @@ import { Icon } from "@repo/ui/components/ui/icon";
 import { Input } from "@repo/ui/components/ui/input";
 import { Label } from "@repo/ui/components/ui/label";
 import { Text } from "@repo/ui/components/ui/text";
+import { ThemeToggle } from "@repo/ui/components/ui/theme-toggle";
 import { Rocket } from "lucide-react-native";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 function DialogPreview() {
   return (
@@ -37,12 +38,12 @@ function DialogPreview() {
             Make changes to your profile here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        <View className="grid gap-4">
-          <View className="grid gap-3">
+        <View className="flex flex-col gap-4">
+          <View className="flex flex-col gap-2">
             <Label htmlFor="name-1">Name</Label>
             <Input id="name-1" defaultValue="Pedro Duarte" />
           </View>
-          <View className="grid gap-3">
+          <View className="flex flex-col gap-2">
             <Label htmlFor="username-1">Username</Label>
             <Input id="username-1" defaultValue="@peduarte" />
           </View>
@@ -116,7 +117,10 @@ function AccordionPreview() {
 
 export default function Index() {
   return (
-    <View className="flex-1 items-center justify-center gap-4 bg-background p-6">
+    <ScrollView contentContainerClassName="items-center gap-4 bg-background p-6 pt-16">
+      <View className="absolute right-6 top-6 z-10">
+        <ThemeToggle />
+      </View>
       <Text className="text-xl font-bold text-foreground">React Native Reusables</Text>
       <Button>
         <Icon as={Rocket} className="text-primary-foreground" />
@@ -127,6 +131,6 @@ export default function Index() {
       </Button>
       <DialogPreview />
       <AccordionPreview />
-    </View>
+    </ScrollView>
   );
 }

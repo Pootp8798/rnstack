@@ -12,7 +12,13 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={NAV_THEME[colorScheme]}>
       <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-      <Stack />
+      {/* contentStyle background matches the theme so toggling doesn't flash a
+          mismatched (white) navigator background between renders. */}
+      <Stack
+        screenOptions={{
+          contentStyle: { backgroundColor: NAV_THEME[colorScheme].colors.background },
+        }}
+      />
       <PortalHost />
     </ThemeProvider>
   );

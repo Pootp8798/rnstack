@@ -7,8 +7,7 @@
     "paths": {
       "@repo/ui": ["./src/index.ts"],
       "@repo/ui/*": ["./src/*"]
-    },
-    "types": []
+    }
   },
   "include": ["src", "nativewind-env.d.ts"]
 }

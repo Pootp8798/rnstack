@@ -1,20 +1,13 @@
 // Learn more: https://docs.expo.dev/guides/monorepos/
 const { getDefaultConfig } = require("expo/metro-config");
 const { withNativeWind } = require("nativewind/metro");
-const path = require("node:path");
 
-const projectRoot = __dirname;
-const workspaceRoot = path.resolve(projectRoot, "../..");
+// Expo SDK 52+ configures monorepos automatically via expo/metro-config — no
+// manual watchFolders / nodeModulesPaths needed. A single physical copy of
+// react-native (and friends) is guaranteed by `nodeLinker: hoisted` in
+// pnpm-workspace.yaml.
+const config = getDefaultConfig(__dirname);
 
-/** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(projectRoot);
-
-// Monorepo: watch the whole workspace and resolve hoisted deps from both locations.
-config.watchFolders = [workspaceRoot];
-config.resolver.nodeModulesPaths = [
-  path.resolve(projectRoot, "node_modules"),
-  path.resolve(workspaceRoot, "node_modules"),
-];
-
-// NativeWind v5: pass the CSS entry as `input`.
-module.exports = withNativeWind(config, { input: "./src/global.css" });
+// NativeWind v5: pass the CSS entry as `input`. `inlineRem: 16` is required by
+// React Native Reusables so `rem`-based utilities resolve to pixel values.
+module.exports = withNativeWind(config, { input: "./src/global.css", inlineRem: 16 });

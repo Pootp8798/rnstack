@@ -2,9 +2,29 @@ packages:
   - "apps/*"
   - "packages/*"
 
+# Flat node_modules (npm/yarn-style) instead of pnpm's isolated symlinked store.
+# React Native / Metro require a SINGLE physical copy of native singletons
+# (react-native, reanimated, worklets, react). pnpm's default isolated layout
+# created a separate virtual-store instance of react-native per peer context,
+# loading two copies into one bundle -> "Maximum call stack size exceeded" at
+# startup. Hoisting is Expo's recommended linker for monorepos.
+# (pnpm v11 reads this from pnpm-workspace.yaml, not .npmrc.)
+nodeLinker: hoisted
+
 # react-native-css (NativeWind v5) binds to lightningcss; tailwindcss pulls a
 # newer 1.32.x that crashes the RN CSS compiler ("failed to deserialize Specifier").
 # Pin a single version across the workspace.
 # https://www.nativewind.dev/v5/getting-started/installation#5-override-the-lightningcss-version
 overrides:
   lightningcss: "1.30.1"
+  # Native modules must resolve to a SINGLE version across the workspace.
+  # Two copies of react-native / reanimated / worklets in one bundle cause a
+  # "Maximum call stack size exceeded" recursion in `get NativeModules` at
+  # startup. Pin every RN-family package to the mobile app's exact versions.
+  react: "19.2.3"
+  react-dom: "19.2.3"
+  react-native: "0.85.3"
+  react-native-reanimated: "4.3.1"
+  react-native-worklets: "0.8.3"
+  react-native-safe-area-context: "~5.7.0"
+  react-native-screens: "4.25.2"

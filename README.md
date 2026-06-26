@@ -1,4 +1,4 @@
-# rn-monorepo
+# rnstack
 
 A batteries-included **Expo + Turborepo** React Native monorepo starter — wired with
 **NativeWind v5** (Tailwind v4), **React Native Reusables**, and **TanStack Query**, plus a

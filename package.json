@@ -1,8 +1,8 @@
 {
-  "name": "rn-monorepo",
+  "name": "rnstack",
   "private": true,
   "version": "0.0.0",
-  "description": "A batteries-included Expo + Turborepo React Native monorepo starter (NativeWind v5, RN Reusables, TanStack Query).",
+  "description": "A batteries-included, mobile-first Expo + Turborepo React Native monorepo starter (NativeWind v5, RN Reusables, TanStack Query).",
   "scripts": {
     "start": "turbo run start",
     "lint": "turbo run lint",
@@ -14,11 +14,18 @@
     "prepare": "husky"
   },
   "keywords": [
-    "react-native-monorepo"
+    "react-native",
+    "expo",
+    "monorepo",
+    "turborepo",
+    "nativewind",
+    "react-native-reusables",
+    "starter",
+    "rnstack"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/sanjaysah101/rn-monorepo"
+    "url": "https://github.com/sanjaysah101/rnstack"
   },
   "author": "Sanjay Kumar Sah",
   "license": "ISC",

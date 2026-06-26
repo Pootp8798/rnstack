@@ -51,6 +51,58 @@ pnpm lint        # turbo run lint
 pnpm typecheck   # turbo run typecheck
 ```
 
+## Running & building
+
+rnstack is **build-tool agnostic** — it ships with **no EAS / cloud account baked in**. Pick the
+path that fits you.
+
+### 1. Local dev (default — no native toolchain)
+
+```sh
+pnpm start            # turbo run start → expo start; press a / i / w
+```
+
+Runs in Expo Go (SDK 56 — see the note above) or the browser. This is all most contributors need.
+
+### 2. Local native build (you have Android Studio / Xcode)
+
+Compile a real binary on your own machine — no account required:
+
+```sh
+cd apps/mobile
+npx expo run:android      # builds & installs a debug APK on a device/emulator
+npx expo run:ios          # macOS + Xcode
+
+# release artifacts via prebuild + native tooling:
+npx expo prebuild         # generates ios/ & android/ (gitignored)
+cd android && ./gradlew assembleRelease   # → app/build/outputs/apk/release/*.apk
+```
+
+### 3. EAS cloud build (opt-in — no local Android Studio / Xcode)
+
+[EAS Build](https://docs.expo.dev/build/introduction/) compiles **on Expo's servers**, so you can
+produce an installable APK/AAB (and iOS builds) with no local native toolchain. rnstack does **not**
+configure EAS for you — it's tied to a personal account, so each developer links their own:
+
+```sh
+npm i -g eas-cli                       # or: pnpm dlx eas-cli
+eas login
+cd apps/mobile
+eas init                               # links YOUR Expo project; writes owner + projectId into app.json
+eas build:configure                    # generates an eas.json with build profiles
+eas build --platform android --profile preview   # prints a download URL / QR for the APK
+```
+
+On the first Android build, answer **yes** to "Generate a new Android Keystore?" — Expo creates and
+stores the signing key for you (no local `keytool`). Builds run asynchronously; press `Ctrl+C` after
+it queues and re-attach with `eas build:list`.
+
+> ⚠️ **Monorepo gotcha:** run every `eas` command **from `apps/mobile/`** (where `app.json` lives),
+> _not_ the repo root — at the root the CLI links the wrong project and writes a stray root
+> `eas.json`. The `owner` / `extra.eas.projectId` that `eas init` writes are **yours** — they
+> belong in your own copy, and are safe to commit in a private app repo (they're public identifiers,
+> not secrets). The starter intentionally ships without them.
+
 ## Theming
 
 Theme lives in **one place**: [`apps/mobile/src/global.css`](apps/mobile/src/global.css). It has

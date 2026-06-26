@@ -23,7 +23,7 @@ rn-monorepo/
 │       │   └── global.css      # SINGLE source of truth for theming (see below)
 │       ├── metro.config.js     # minimal; expo/metro-config handles the monorepo
 │       ├── babel.config.js     # explicit react-native-worklets/plugin (pnpm needs it)
-│       ├── app.json
+│       ├── app.json            # expo config (NO owner/eas.projectId — added per-dev by eas init)
 │       └── AGENTS.md           # "read versioned Expo docs before coding"
 ├── packages/
 │   ├── ui/                     # @repo/ui — the shared UI kit (RNR components live here)
@@ -94,6 +94,40 @@ Then audit it for the native gotchas above (grid, TextInput, web-only utils) bef
 
 **Add a screen:** create a route file under `apps/mobile/src/app/` (expo-router file-based routing).
 
+## Building the app — keep it build-tool agnostic
+
+This is a **starter/CLI template**: it must NOT bake in any individual's EAS/cloud account. The
+default path is local dev (`pnpm start`). Two opt-in build paths exist; never assume EAS.
+
+**Deliberately NOT committed** (each ties to one Expo account / would break forkers):
+`apps/mobile/eas.json`, and `owner` + `extra.eas.projectId` in `apps/mobile/app.json`. `eas init` /
+`eas build:configure` regenerate these in the *developer's own* copy. Do not re-add them to the
+template — that leaks the maintainer's private-org identity and makes every fork's build fail.
+
+**Local native build** (needs Android Studio / Xcode): `npx expo run:android` / `run:ios`, or
+`npx expo prebuild` then Gradle/Xcode. `package.json` already has `android`/`ios` scripts.
+
+**EAS cloud build** (opt-in — no local toolchain). Non-obvious rules (each fixed a real failure):
+
+1. **Run every `eas` command from `apps/mobile/`, never the repo root.** `eas init` / `eas build`
+   key off the nearest `app.json`. Run at the root and the CLI links a *different* project (e.g.
+   `@<account>/rnstack`) and writes a stray root `eas.json` — delete it if that happens.
+2. **`eas project:init --path <dir>` does not exist** — `--path` is not a valid flag. Use
+   `cd apps/mobile && eas init`.
+3. **Cloud keystore:** on the first Android build, answer **yes** to "Generate a new Android
+   Keystore?" — Expo stores it server-side (works with no local `keytool`).
+4. **Monorepo install on the server:** EAS uploads only git-tracked source and installs on its
+   workers using the root `pnpm-lock.yaml` + `pnpm-workspace.yaml` (`nodeLinker: hoisted`). Keep
+   the lockfile committed/in sync.
+5. No-Android-Studio: when EAS asks "Install and run on emulator?", answer **no** (yes →
+   `spawn adb ENOENT`, harmless — the build artifact is already done). Or use `--no-wait`.
+
+```sh
+eas login && cd apps/mobile
+eas init && eas build:configure                  # links YOUR account; writes app.json + eas.json
+eas build --platform android --profile preview   # installable APK; prints a download URL/QR
+```
+
 ## Verifying changes
 
 - `pnpm typecheck` (Turbo, all packages) — or `cd apps/mobile && npx tsc --noEmit`. NOTE: a stray `apps/mobile/example/` dir (leftover Expo template) reports unrelated errors — filter them out (`grep -v '^example/'`).
@@ -105,7 +139,7 @@ Then audit it for the native gotchas above (grid, TextInput, web-only utils) bef
 
 These do not exist in the repo yet. Do not assume their files/APIs are present; if asked to use them, build them first or confirm scope.
 
-- **`create-rnstack` CLI** — scaffold a new monorepo by project name in one command, installing deps and applying the fixes above automatically.
+- **`create-rnstack` CLI** — scaffold a new monorepo by project name in one command, installing deps and applying the fixes above automatically. MUST stay build-tool agnostic: never bake in an EAS/cloud account, keystore, or `projectId`/`owner`; the scaffold runs/builds locally out of the box and treats EAS as opt-in (developer runs `eas init` for their own account).
 - **Multi-app generation** — let the user choose how many apps to create under `apps/` at init time.
 - **API layer** — minimal data-fetching with **refresh-token** auth logic (token storage, refresh-on-401 interceptor). TanStack Query is the intended data layer (already referenced in the root package description).
 - **Starter screens** — Home and Settings screens that almost every project needs, pre-wired.

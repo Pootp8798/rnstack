@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.nativewind.dev)",
+      "WebSearch",
+      "Bash(ls ../../../packages/ui/src)",
+      "Bash(ls ../../../../packages/ui/src)",
+      "Bash(ls global.css)",
+      "Bash(ls src/global.css)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm --filter mobile --filter @repo/ui typecheck)",
+      "Bash(npx tsc *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(cat pnpm-workspace.yaml)",
+      "Bash(cat .npmrc)",
+      "Bash(pnpm why *)",
+      "Bash(awk '/^lightningcss@1.32/{p=1} p')",
+      "Bash(pnpm prune *)",
+      "Bash(rm -rf .expo/cache node_modules/.cache __TRACKED_VAR__/metro-* __TRACKED_VAR__/haste-*)",
+      "Bash(ls -la .expo)"
+    ]
+  },
+  "enabledPlugins": {
+    "expo@claude-plugins-official": true
+  }
+}

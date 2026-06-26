@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "description": "A batteries-included Expo + Turborepo React Native monorepo starter (NativeWind v5, RN Reusables, TanStack Query).",
   "scripts": {
+    "start": "turbo run start",
     "lint": "turbo run lint",
     "lint:unsafe": "biome check . --write --unsafe",
     "typecheck": "turbo run typecheck",

